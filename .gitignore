@@ -25,7 +25,7 @@ temp/
 # AI foloder and files
 openspec/
 AGENTS.md
-.github/
 .vscode/
 .gemini/
 .kilocode/
+.github/prompts/

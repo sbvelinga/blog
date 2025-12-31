@@ -19,8 +19,8 @@ A minimal, privacy-focused static blog built with [Eleventy](https://www.11ty.de
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/personlijke-blog.git
-cd personlijke-blog
+git clone https://github.com/yourusername/blog.git
+cd blog
 ```
 
 2. Install dependencies:
@@ -66,7 +66,7 @@ npm run lint:fix
 ## Project Structure
 
 ```
-personlijke-blog/
+blog/
 ├── _data/              # Global data files
 │   └── site.json       # Site metadata
 ├── _includes/          # Reusable template components
@@ -169,7 +169,7 @@ Make sure GitHub Pages is configured:
 
 1. Go to repository Settings > Pages
 2. Set source to "GitHub Actions"
-3. The site will be available at `https://yourusername.github.io/personlijke-blog/`
+3. The site will be available at `https://yourusername.github.io/blog/`
 
 ## Tech Stack
 
