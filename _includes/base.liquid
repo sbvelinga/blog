@@ -5,13 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="{{ description | default: site.description }}">
   <title>{% if title %}{{ title }} | {% endif %}{{ site.title }}</title>
-  <link rel="stylesheet" href="{{ '/assets/css/main.css' | url }}">
-  <link rel="icon" type="image/svg+xml" href="{{ '/assets/img/favicon.svg' | url }}">
+  <link rel="stylesheet" href="{{ site.url }}/assets/css/main.css">
+  <link rel="icon" type="image/svg+xml" href="{{ site.url }}/assets/img/favicon.svg">
 </head>
 <body>
   <header class="site-header">
     <nav class="site-nav">
-      <a href="{{ '/' | url }}" class="site-logo">{{ site.title }}</a>
+      <a href="{{ site.url }}/" class="site-logo">{{ site.title }}</a>
       <button class="nav-toggle" aria-label="Toggle navigation" id="nav-toggle">
         <span></span>
         <span></span>
@@ -19,10 +19,10 @@
       </button>
       <div class="nav-container" id="nav-container">
         <ul class="nav-menu">
-          <li><a href="{{ '/blog/' | url }}">Posts</a></li>
-          <li><a href="{{ '/pages/about/' | url }}">Over</a></li>
-          <li><a href="{{ '/pages/preken/' | url }}">Prekenoverzicht</a></li>
-          <li><a href="{{ '/pages/aanbevelingen/' | url }}">Aanbevelingen</a></li>
+          <li><a href="{{ site.url }}/blog/">Posts</a></li>
+          <li><a href="{{ site.url }}/pages/about/">Over</a></li>
+          <li><a href="{{ site.url }}/pages/preken/">Prekenoverzicht</a></li>
+          <li><a href="{{ site.url }}/pages/aanbevelingen/">Aanbevelingen</a></li>
         </ul>
         <div class="social-links">
           <a href="https://twitter.com/sbvelinga" target="_blank" aria-label="X (Twitter)">

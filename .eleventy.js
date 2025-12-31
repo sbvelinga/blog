@@ -153,7 +153,7 @@ export default function (eleventyConfig) {
       output: "_site",
     },
     // When deploying as a GitHub Pages project site, set the pathPrefix
-    pathPrefix: "/blog/",
+    pathPrefix: "/blog",
     markdownTemplateEngine: "liquid",
     htmlTemplateEngine: "liquid",
     dataTemplateEngine: "liquid",

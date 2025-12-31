@@ -6,7 +6,7 @@ title: Home
 <div class="home">
   <h1>Welkom</h1>
   <p>Leuk dat je er bent! Op deze plek deel ik mijn gedachten over geloof, het leven en alles wat mij inspireert. Ik hoop dat je hier iets vindt dat je raakt of aan het denken zet.</p>
-  <p><a href="{{ '/pages/about/' | url }}">Lees meer over mij &rarr;</a></p>
+  <p><a href="{{ site.url }}/pages/about/">Lees meer over mij &rarr;</a></p>
 </div>
 
 <h2>Recente Blogposts</h2>
@@ -39,7 +39,7 @@ title: Home
           {% for tag in post.data.tags %}
             {% if tag != "posts" %}
               {% assign tagColorIndex = tag.size | modulo: 5 %}
-              <a href="{{ '/tags/' | url }}{{ tag | slugify }}/" class="tag tag-{{ tagColorIndex }}">{{ tag }}</a>
+              <a href="{{ site.url }}/tags/{{ tag | slugify }}/" class="tag tag-{{ tagColorIndex }}">{{ tag }}</a>
             {% endif %}
           {% endfor %}
         </div>

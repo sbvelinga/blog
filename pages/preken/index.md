@@ -13,11 +13,11 @@ title: Prekenoverzicht
 
 - [27 juli – Hebreeën 4 – Vrienden worden met de tijd: Rusten in Gods ritme](https://www.youtube.com/live/qHrbuvVXYrA?si=K359OID8SkYSck3J)
 
-  - [Verdiepende Blogpost]({{ '/blog/2025-08-01-vrienden-worden-met-de-tijd-rusten-in-gods-ritme/' | url }})
+  - [Verdiepende Blogpost]({{ site.url }}/blog/2025-08-01-vrienden-worden-met-de-tijd-rusten-in-gods-ritme/)
 
 - [12 oktober – Psalm 73 – Van Tijfel naar Trouw](https://www.youtube.com/live/x_S6JdV5s-M?si=615VI__sAPM9XJBE&t=2239)
 
-  - [Verdiepende Blogpost]({{ '/blog/2025-10-16-psalm-73-twijfel-en-trouw/' | url }})
+  - [Verdiepende Blogpost]({{ site.url }}/blog/2025-10-16-psalm-73-twijfel-en-trouw/)
 
 - [21 december - Psalm 139 - Het duister is niet donker voor Hem](https://www.youtube.com/live/puvG6MbMd8o?si=Fke8BB0ygtgLcgOW&t=2968)
 
