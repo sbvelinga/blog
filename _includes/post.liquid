@@ -1,0 +1,52 @@
+---
+layout: base
+---
+
+<article class="post">
+  <header class="post-header">
+    <h1 class="post-title">{{ title }}</h1>
+    <div class="post-meta">
+      <time datetime="{{ page.date | date: "%Y-%m-%d" }}">{{ page.date | readableDate }}</time>
+      {% if tags %}
+        <div class="post-tags">
+          {% for tag in tags %}
+            {% if tag != "posts" %}
+              {% assign tagColorIndex = tag.size | modulo: 5 %}
+              <a href="{{ '/tags/' | url }}{{ tag | slugify }}/" class="tag tag-{{ tagColorIndex }}">{{ tag }}</a>
+            {% endif %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </header>
+
+  <div class="post-content">
+    {{ content }}
+  </div>
+
+  <footer class="post-footer">
+    {% if collections.posts %}
+      {% assign allPosts = collections.posts | reverse %}
+      {% for post in allPosts %}
+        {% if post.url == page.url %}
+          {% if forloop.last == false %}
+            {% assign nextPost = allPosts[forloop.index0] %}
+          {% endif %}
+          {% if forloop.first == false %}
+            {% assign prevPost = allPosts[forloop.index0] | minus: 1 %}
+            {% assign prevPost = allPosts[prevPost] %}
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
+
+    <nav class="post-navigation">
+      {% if prevPost %}
+        <a class="prev" href="{{ prevPost.url }}">&larr; {{ prevPost.data.title }}</a>
+      {% endif %}
+      {% if nextPost %}
+        <a class="next" href="{{ nextPost.url }}">{{ nextPost.data.title }} &rarr;</a>
+      {% endif %}
+    </nav>
+  </footer>
+</article>

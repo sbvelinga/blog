@@ -1,0 +1,14 @@
+# Dependencies
+node_modules/
+
+# Git
+.git/
+
+# Documentation
+openspec/
+.kilocode/
+.gemini/
+.github/
+
+# Build output
+_site/

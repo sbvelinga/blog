@@ -1,0 +1,15 @@
+{
+  "title": "Blog Samuël Velinga",
+  "url": "https://sbvelinga.github.io/personlijke-blog/",
+  "author": {
+    "name": "Samuël Velinga"
+  },
+  "description": "Persoonlijke blog van Samuël Velinga.",
+  "lang": "en",
+  "analytics": {
+    "goatcounter": {
+      "endpoint": "https://sbvelinga.goatcounter.com/count",
+      "script": "https://gc.zgo.at/count.js"
+    }
+  }
+}
