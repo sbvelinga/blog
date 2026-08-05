@@ -13,6 +13,9 @@ export default function (eleventyConfig) {
   // Copy the `assets` directory to the output
   eleventyConfig.addPassthroughCopy("assets");
 
+  // Rebuild on CSV edits used by custom JS data loaders.
+  eleventyConfig.addWatchTarget("./_data/bookTable.csv");
+
   // Add Eleventy plugins
   eleventyConfig.addPlugin(pluginRss);
   eleventyConfig.addPlugin(pluginSyntaxHighlight);
