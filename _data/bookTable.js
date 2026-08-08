@@ -52,7 +52,8 @@ export default () => {
         name: "bol.com",
         icon: "https://cdn.sanity.io/images/qxrxmo3r/over-prd/510e6d75ea3ae45058065da3b7015eb84da40caf-2560x1400.jpg"
       },
-      items: []
+      items: [],
+      categoryOptions: []
     };
   }
 
@@ -89,11 +90,21 @@ export default () => {
     };
   });
 
+  const categoryOptions = Array.from(
+    new Map(
+      rows.flatMap((book) =>
+        book.categories.map((label, index) => [book.categorySlugs[index], label])
+      )
+    ),
+    ([value, label]) => ({ value, label })
+  ).sort((a, b) => a.label.localeCompare(b.label, "nl"));
+
   return {
     bol: {
       name: "bol.com",
       icon: "https://cdn.sanity.io/images/qxrxmo3r/over-prd/510e6d75ea3ae45058065da3b7015eb84da40caf-2560x1400.jpg"
     },
-    items: rows
+    items: rows,
+    categoryOptions
   };
 };

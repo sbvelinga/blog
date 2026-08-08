@@ -179,28 +179,25 @@ Boeken zijn een bron van kennis, inspiratie en verdieping. Ik lees veel boeken e
 
 ### Boekenoverzicht
 
-<div class="table-tools" role="region" aria-label="Boekenfilters">
-	<div class="search-group">
-		<label for="book-search">Zoeken</label>
-		<input id="book-search" type="search" placeholder="Auteur, titel, categorie..." />
-	</div>
 
+<div class="table-tools" id="book-filters" role="region" aria-label="Boekenfilters">
+	<div class="filter-heading">
+		<strong>Boeken filteren</strong>
+		<span>Combineer zoeken, categorie en taal.</span>
+	</div>
+	<div class="filter-group filter-search">
+		<label for="book-search">Zoeken</label>
+		<input id="book-search" type="search" placeholder="Auteur, titel, categorie..." autocomplete="off" />
+	</div>
 	<div class="filter-group">
 		<label for="book-category">Categorie</label>
 		<select id="book-category">
 			<option value="">Alle categorieën</option>
-			<option value="theologie">Theologie</option>
-			<option value="bijbelwetenschap">Bijbelwetenschap</option>
-			<option value="spiritualiteit">Spiritualiteit</option>
-			<option value="discipelschap">Discipelschap</option>
-			<option value="pastoraat">Pastoraat</option>
-			<option value="filosofie">Filosofie</option>
-			<option value="geloof-en-cultuur">Geloof en cultuur</option>
-			<option value="apologetiek">Apologetiek</option>
-			<option value="geschiedenis">Geschiedenis</option>
+			{%- for category in bookTable.categoryOptions -%}
+			<option value="{{ category.value }}">{{ category.label }}</option>
+			{%- endfor -%}
 		</select>
 	</div>
-
 	<div class="filter-group">
 		<label for="book-lang">Taal</label>
 		<select id="book-lang">
@@ -209,9 +206,11 @@ Boeken zijn een bron van kennis, inspiratie en verdieping. Ik lees veel boeken e
 			<option value="en">Engels</option>
 		</select>
 	</div>
+	<button class="filter-reset" id="book-reset" type="button">Wis filters</button>
 </div>
 
-<p id="book-count" aria-live="polite"></p>
+<p class="book-count" id="book-count" aria-live="polite">Alle boeken</p>
+<p class="book-empty" id="book-empty" hidden>Geen boeken gevonden. Probeer een andere zoekterm of filter.</p>
 
 <div class="rec-table-wrap">
 	<table class="rec-table" id="book-table">
@@ -228,22 +227,19 @@ Boeken zijn een bron van kennis, inspiratie en verdieping. Ik lees veel boeken e
 		</thead>
 		<tbody>
 			{%- for book in bookTable.items -%}
-			<tr data-lang="{{ book.languageCode }}" data-categories="{{ book.categories | join: '|' | downcase }}">
+			<tr data-lang="{{ book.languageCode }}" data-categories="{{ book.categorySlugs | join: '|' }}">
 				<td>{{ book.author }}</td>
 				<td>{{ book.title }}</td>
 				<td>{{ book.categories | join: ', ' }}</td>
 				<td>{{ book.language }}</td>
 				<td>
-					{%- if book.denHertogUrl or book.deFakkelUrl or book.logo2Url or book.sjofarUrl -%}
+					{%- if book.bookstores.size > 0 -%}
 					<div class="store-links">
-						{%- if book.denHertogUrl -%}<a class="store-link" href="{{ book.denHertogUrl }}" target="_blank" rel="noopener noreferrer" title="Den Hertog"><img src="https://www.denhertog.nl/favicon.ico" alt="Den Hertog" class="store-icon" loading="lazy" /></a>{%- endif -%}
-						{%- if book.deFakkelUrl -%}<a class="store-link" href="{{ book.deFakkelUrl }}" target="_blank" rel="noopener noreferrer" title="De Fakkel Hoogeveen"><img src="https://www.defakkelhoogeveen.nl/home-sq.png" alt="De Fakkel" class="store-icon" loading="lazy" /></a>{%- endif -%}
-						{%- if book.logo2Url -%}<a class="store-link" href="{{ book.logo2Url }}" target="_blank" rel="noopener noreferrer" title="Boekhandel"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRy0S_73kJ0ca3T5AWMxRr9PxcDw9JbxFM-cw&s" alt="Boekhandel" class="store-icon" loading="lazy" /></a>{%- endif -%}
-						{%- if book.sjofarUrl -%}<a class="store-link" href="{{ book.sjofarUrl }}" target="_blank" rel="noopener noreferrer" title="Sjofar"><img src="https://www.sjofar.nl/home-ls.png" alt="Sjofar" class="store-icon" loading="lazy" /></a>{%- endif -%}
+						{%- for store in book.bookstores -%}<a class="store-link" href="{{ store.url }}" target="_blank" rel="noopener noreferrer" title="{{ store.name }}"><img src="{{ store.icon }}" alt="{{ store.name }}" class="store-icon" loading="lazy" /></a>{%- endfor -%}
 					</div>
 					{%- else -%}-{%- endif -%}
 				</td>
-				<td>{%- if book.bolUrl -%}<a class="store-link" href="{{ book.bolUrl }}" target="_blank" rel="noopener noreferrer" title="Zoek op bol.com"><img src="https://cdn.sanity.io/images/qxrxmo3r/over-prd/510e6d75ea3ae45058065da3b7015eb84da40caf-2560x1400.jpg" alt="bol.com" class="store-icon bol-icon" loading="lazy" /></a>{%- else -%}-{%- endif -%}</td>
+				<td>{%- if book.bolUrl -%}<a class="store-link" href="{{ book.bolUrl }}" target="_blank" rel="noopener noreferrer" title="Zoek op bol.com"><img src="{{ bookTable.bol.icon }}" alt="bol.com" class="store-icon bol-icon" loading="lazy" /></a>{%- else -%}-{%- endif -%}</td>
 			</tr>
 			{%- endfor -%}
 		</tbody>
@@ -255,10 +251,12 @@ Boeken zijn een bron van kennis, inspiratie en verdieping. Ik lees veel boeken e
 		const searchInput = document.getElementById("book-search");
 		const categorySelect = document.getElementById("book-category");
 		const langSelect = document.getElementById("book-lang");
+		const resetButton = document.getElementById("book-reset");
 		const table = document.getElementById("book-table");
 		const countElement = document.getElementById("book-count");
+		const emptyElement = document.getElementById("book-empty");
 
-		if (!searchInput || !categorySelect || !langSelect || !table || !countElement) {
+		if (!searchInput || !categorySelect || !langSelect || !resetButton || !table || !countElement || !emptyElement) {
 			return;
 		}
 
@@ -288,7 +286,7 @@ Boeken zijn een bron van kennis, inspiratie en verdieping. Ik lees veel boeken e
 			let visible = 0;
 
 			rows.forEach((row) => {
-				const rowText = normalize(row.textContent);
+				const rowText = normalize(row.cells[0].textContent + " " + row.cells[1].textContent + " " + row.cells[2].textContent);
 				const rowLang = normalize(row.dataset.lang);
 				const rowCategories = categoryList(row);
 
@@ -305,12 +303,22 @@ Boeken zijn een bron van kennis, inspiratie en verdieping. Ik lees veel boeken e
 			});
 
 			const total = rows.length;
-			countElement.textContent = `${visible} van ${total} boeken`;
+			countElement.textContent = visible === total && !query && !category && !lang
+				? `Alle ${total} boeken`
+				: `${visible} van ${total} boeken`;
+			emptyElement.hidden = visible !== 0;
 		}
 
 		searchInput.addEventListener("input", applyFilters);
 		categorySelect.addEventListener("change", applyFilters);
 		langSelect.addEventListener("change", applyFilters);
+		resetButton.addEventListener("click", () => {
+			searchInput.value = "";
+			categorySelect.value = "";
+			langSelect.value = "";
+			applyFilters();
+			searchInput.focus();
+		});
 
 		applyFilters();
 	})();
