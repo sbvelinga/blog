@@ -29,3 +29,12 @@ AGENTS.md
 .gemini/
 .kilocode/
 .github/prompts/
+
+# Local drafts and plans (not published, not synced)
+_drafts/
+_plans/
+
+# Pix Agent
+.pi/
+.pi-lens/
+.cache/

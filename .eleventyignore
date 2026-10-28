@@ -12,3 +12,7 @@ openspec/
 
 # Build output
 _site/
+
+# Local only (not published, not in git)
+_drafts/
+_plans/
